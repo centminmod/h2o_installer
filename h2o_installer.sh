@@ -85,7 +85,7 @@ install() {
 		\cp -a h2o /usr/local
 
 cat > "/usr/local/h2o/h2o.conf" <<EOF
-# bind all listening ports to "0.0.0.0", so it can start with: start_server --port 0.0.0.0:8080 --port 0.0.0.0:8081 -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &
+# bind all listening ports to "0.0.0.0", so it can start with: start_server --port 0.0.0.0:8080 --port 0.0.0.0:8081 --pid-file=/var/run/h2o.pid --status-file=/usr/local/h2o/h2o_status -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &
 
 listen:
   host: 0.0.0.0
@@ -154,8 +154,10 @@ EOF
 
 	echo "/usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &"
 	echo "or"
-	echo "start_server --port 0.0.0.0:8080 --port 0.0.0.0:8081 -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &"
+	echo "start_server --port 0.0.0.0:8080 --port 0.0.0.0:8081 --pid-file=/var/run/h2o.pid --status-file=/usr/local/h2o/h2o_status -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &"
 	echo
+	echo "to restart h2o"
+	echo "start_server --restart --port 0.0.0.0:8080 --port 0.0.0.0:8081 --pid-file=/var/run/h2o.pid --status-file=/usr/local/h2o/h2o_status -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &"
 	complete
 }
 
