@@ -12,7 +12,7 @@ VER=0.1
 #############
 DT=`date +"%d%m%y-%H%M%S"`
 
-HO_VER=0.9.0
+HO_VER=1.1.1
 CUSTOMCONF=y
 USER=nginx
 
@@ -56,13 +56,13 @@ download() {
 }
 
 install() {
-	if [[ -z "$(rpm -ql libyaml)" ]]; then
+	if [[ ! "$(rpm -ql libyaml)" || ! "$(rpm -ql libyaml-devel)" ]]; then
 		yum -y install libyaml libyaml-devel
 	fi
-	if [[ -z "$(rpm -ql perl-devel)" ]]; then
+	if [[ ! "$(rpm -ql perl-devel)" ]]; then
 		yum -y install perl-devel
 	fi
-	if [[ -z "$(rpm -ql perl-CPAN)" ]]; then
+	if [[ ! "$(rpm -ql perl-CPAN)" ]]; then
 		yum -y install perl-CPAN
 	fi
 	echo "install cpanm"
