@@ -90,6 +90,7 @@ cat > "/usr/local/h2o/h2o.conf" <<EOF
 listen:
   host: 0.0.0.0
   port: 8080
+# pid-file: /var/run/h2o.pid
 max-connections: 10240
 http1-request-timeout: 10
 limit-request-body: 536870912
