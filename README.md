@@ -44,3 +44,46 @@ header check for https on port 8081
 Chrome web browser reported working HTTP/2 support on CentminMod.com LEMP stack's H2O server integration
 
 ![HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration](http://centminmod.com/h2o/screenshots/http2/h2o_111_http2_enabled_chrome_00.png "HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration")
+
+Example H2O SSL setup with Comodo SSL Wildcard certificate
+
+`/usr/local/h2o/centminmod.com-unified.crt` created using concatenated 
+
+    cat yourdomain.crt intermediate.crt root.pem > /usr/local/h2o/centminmod.com-unified.crt
+
+example SSL config
+
+    listen:
+      host: 0.0.0.0
+      port: 8081
+      ssl:
+        certificate-file: /usr/local/h2o/centminmod.com-unified.crt
+        key-file: /usr/local/h2o/centminmod.com.key
+        minimum-version: TLSv1
+        cipher-suite: ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA:!CAMELLIA
+
+check https SSL on port 8081 for H20 server
+
+    ./cipherscan XXX.centminmod.com:8081        
+    ..............
+    Target: XXX.centminmod.com:8081
+    
+    prio  ciphersuite                  protocols              pfs_keysize
+    1     ECDHE-RSA-AES256-GCM-SHA384  TLSv1.2                ECDH,P-256,256bits
+    2     ECDHE-RSA-AES256-SHA384      TLSv1.2                ECDH,P-256,256bits
+    3     ECDHE-RSA-AES256-SHA         TLSv1,TLSv1.1,TLSv1.2  ECDH,P-256,256bits
+    4     AES256-GCM-SHA384            TLSv1.2
+    5     AES256-SHA256                TLSv1.2
+    6     AES256-SHA                   TLSv1,TLSv1.1,TLSv1.2
+    7     ECDHE-RSA-AES128-GCM-SHA256  TLSv1.2                ECDH,P-256,256bits
+    8     ECDHE-RSA-AES128-SHA256      TLSv1.2                ECDH,P-256,256bits
+    9     ECDHE-RSA-AES128-SHA         TLSv1,TLSv1.1,TLSv1.2  ECDH,P-256,256bits
+    10    AES128-GCM-SHA256            TLSv1.2
+    11    AES128-SHA256                TLSv1.2
+    12    AES128-SHA                   TLSv1,TLSv1.1,TLSv1.2
+    13    DES-CBC3-SHA                 TLSv1,TLSv1.1,TLSv1.2
+    
+    Certificate: trusted, 2048 bit, sha256WithRSAEncryption signature
+    TLS ticket lifetime hint: 300
+    OCSP stapling: supported
+    Client side cipher ordering
