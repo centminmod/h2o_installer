@@ -45,6 +45,10 @@ Chrome web browser reported working HTTP/2 support on CentminMod.com LEMP stack'
 
 ![HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration](http://centminmod.com/h2o/screenshots/http2/h2o_111_http2_enabled_chrome_00.png "HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration")
 
+Opera 28 developer tools with SPDY/4 chrome flag enabled for H2-14 = HTTP/2 draft 14
+
+![Opera 28 dev tools H2-14 protocol](http://centminmod.com/h2o/screenshots/http2/h2o_111_http2_enabled_opera28_01.png "Opera 28 dev tools H2-14 protocol")
+
 Example H2O SSL setup with Comodo SSL Wildcard certificate
 
 `/usr/local/h2o/centminmod.com-unified.crt` created using concatenated 
