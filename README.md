@@ -1,5 +1,7 @@
 [h2o http server](https://github.com/h2o/h2o) installer script for integrating h2o into centminmod.com LEMP web stack
 
+More info on HTTP/2 at [http://http2rulez.com/](http://http2rulez.com/)
+
 start h2o server
 
     start_server --port 0.0.0.0:8080 --port 0.0.0.0:8081 --pid-file=/var/run/h2o.pid --status-file=/usr/local/h2o/h2o_status -- /usr/local/bin/h2o -c /usr/local/h2o/h2o.conf &
