@@ -15,11 +15,23 @@ start h2o server
     [OCSP Stapling] disabled for certificate file:/usr/local/h2o/server.crt
     [OCSP Stapling] disabled for certificate file:/usr/local/h2o/alternate.crt
 
-header check
+header check for http on port 8080
 
-    curl -I localhost:8080/index.html
+    curl -I http://localhost:8080/index.html
     HTTP/1.1 200 OK
     Date: Sun, 15 Mar 2015 23:50:21 GMT
+    Server: h2o/1.1.1
+    Connection: keep-alive
+    Content-Length: 3801
+    content-type: text/html
+    last-modified: Sat, 14 Mar 2015 19:15:28 GMT
+    etag: "550488d0-ed9"
+
+header check for https on port 8081
+
+    curl -kI https://localhost:8081/index.html
+    HTTP/1.1 200 OK
+    Date: Sun, 15 Mar 2015 23:55:28 GMT
     Server: h2o/1.1.1
     Connection: keep-alive
     Content-Length: 3801
