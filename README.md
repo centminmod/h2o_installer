@@ -87,3 +87,23 @@ check https SSL on port 8081 for H20 server using [cipherscan](https://github.co
     TLS ticket lifetime hint: 300
     OCSP stapling: supported
     Client side cipher ordering
+
+compared to Centmin Mod Nginx SPDY setup with OpenSSL 1.0.2 chacha20_poly1305 cipher patched on [https://community.centminmod.com](https://community.centminmod.com)
+
+    ./cipherscan community.centminmod.com:443       
+    ........
+    Target: community.centminmod.com:443
+    
+    prio  ciphersuite                  protocols              pfs_keysize
+    1     ECDHE-RSA-CHACHA20-POLY1305  TLSv1.2                ECDH,P-256,256bits
+    2     ECDHE-RSA-AES256-GCM-SHA384  TLSv1.2                ECDH,P-256,256bits
+    3     ECDHE-RSA-AES256-SHA384      TLSv1.2                ECDH,P-256,256bits
+    4     ECDHE-RSA-AES256-SHA         TLSv1,TLSv1.1,TLSv1.2  ECDH,P-256,256bits
+    5     DHE-RSA-AES256-GCM-SHA384    TLSv1.2                DH,4096bits
+    6     DHE-RSA-AES256-SHA256        TLSv1.2                DH,4096bits
+    7     DHE-RSA-AES256-SHA           TLSv1,TLSv1.1,TLSv1.2  DH,4096bits
+    
+    Certificate: trusted, 2048 bit, sha256WithRSAEncryption signature
+    TLS ticket lifetime hint: 43200
+    OCSP stapling: supported
+    Server side cipher ordering
