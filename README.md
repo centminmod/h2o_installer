@@ -38,3 +38,7 @@ header check for https on port 8081
     content-type: text/html
     last-modified: Sat, 14 Mar 2015 19:15:28 GMT
     etag: "550488d0-ed9"
+
+Chrome web browser reported working HTTP/2 support on CentminMod.com LEMP stack's H2O server integration
+
+![HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration](http://centminmod.com/h2o/screenshots/http2/h2o_111_http2_enabled_chrome_00.png "HTTP/2 enabled support in Chrome Browser for CentminMod.com stack's H2O server integration")
