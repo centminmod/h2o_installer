@@ -4,12 +4,12 @@ https://nghttp2.org/
 
 nghttp2 is an implementation of HTTP/2 in C
 
-Below is nghttp2 reference help files for nghttp2:
+Below is nghttp2 reference help files for nghttp2 compiled on CentOS 6.6 64bit server:
 
 * [client = nghttp](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#nghttp-client)
 * [server = nghttpd](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#nghttpd-server)
 * [proxy = nghttpx](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#nghttpx-proxy)
-* [h2load load testing tool = h2load](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#h2load-load-testing-tool-for-spdy-and-http2) compiled on CentOS 6.6 64bit server
+* [h2load load testing tool = h2load](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#h2load-load-testing-tool-for-spdy-and-http2)
 
 nghttp client
 =========================================
