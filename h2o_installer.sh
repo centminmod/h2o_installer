@@ -123,7 +123,6 @@ hosts:
     paths:
       /:
         file.dir: /usr/local/nginx/html
-        header.append: ' on centminmod.com'
     access-log: /usr/local/h2o/logs/access.log
   "alternate.127.0.0.1.xip.io:8081":
     listen:
