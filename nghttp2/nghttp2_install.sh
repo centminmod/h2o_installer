@@ -21,6 +21,19 @@ else
     CPUS=$(echo $CPUS+1 | bc)
     MAKETHREADS=" -j$CPUS"
 fi
+
+if [ ! -f /usr/local/bin/python2.7 ]; then
+	echo
+	echo "Python 2.7 not found"
+	echo "Install Python 2.7.9 via Centmin Mod Addon at"
+	echo "addons/python27_install.sh"
+	echo
+	echo "chmod 0700 python27_install.sh"
+	echo "./python27_install.sh install"
+	echo
+	echo "then re-run nghttp2_install.sh"
+	exit
+fi
 #################################################################
 # yum packages required
 echo
@@ -145,6 +158,18 @@ make install
 #################################################################
 echo
 echo "---------------------------------------------------"
+echo "install cython newer version"
+echo "---------------------------------------------------"
+mkdir ${BASEINSTALL_DIR}/nghttp2_cython
+cd ${BASEINSTALL_DIR}/nghttp2_cython
+wget http://cython.org/release/Cython-0.22.tar.gz
+tar xzf Cython-0.22.tar.gz
+cd Cython-0.22
+python setup.py install
+
+#################################################################
+echo
+echo "---------------------------------------------------"
 echo "install spdylay via git"
 echo "---------------------------------------------------"
 mkdir ${BASEINSTALL_DIR}/nghttp2_spdylay
@@ -169,7 +194,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_git/nghttp2
 make clean
 (cd m4 && wget http://keithr.org/eric/src/whoisserver-nightly/m4/am_path_xml2.m4)
 /usr/local/bin/autoreconf -i --force
-PKG_CONFIG_PATH=/usr/local/http2-15/lib/pkgconfig ./configure --prefix=/usr/local/http2-15 --enable-app --with-xml-prefix=/usr/local/http2-15 LIBSPDYLAY_CFLAGS="-I/usr/local/http-15/include" LIBSPDYLAY_LIBS="-L/usr/local/http-15/lib -lspdylay" ZLIB_CFLAGS="-I/usr/local/http2-15/include" ZLIB_LIBS="-L/usr/local/http-15/lib" CFLAGS="-I/usr/local/http2-15/include" CXXFLAGS="-I/usr/local/http2-15/include" LDFLAGS="-L/usr/local/http2-15/lib"
+PKG_CONFIG_PATH=/usr/local/http2-15/lib/pkgconfig ./configure --prefix=/usr/local/http2-15 --enable-app --with-xml-prefix=/usr/local/http2-15 LIBSPDYLAY_CFLAGS="-I/usr/local/http-15/include" LIBSPDYLAY_LIBS="-L/usr/local/http-15/lib -lspdylay" ZLIB_CFLAGS="-I/usr/local/http2-15/include" ZLIB_LIBS="-L/usr/local/http-15/lib" CFLAGS="-I/usr/local/http2-15/include" CXXFLAGS="-I/usr/local/http2-15/include" LDFLAGS="-L/usr/local/http2-15/lib" PYTHON_VERSION=2.7 PYTHON_CPPFLAGS="-I/usr/local/include/python2.7" PYTHON_LDFLAGS="-L/usr/local/lib -lpython2.7"
 make${MAKETHREADS}
 make check
 make install
