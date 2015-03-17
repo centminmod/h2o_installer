@@ -16,6 +16,7 @@ HO_VER=1.1.1
 CUSTOMCONF=y
 USER=nginx
 
+HO_GITBUILD=y
 ######################################################
 DIR_TMP='/svr-setup'
 SCRIPT_DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
@@ -50,9 +51,15 @@ complete() {
 
 download() {
 	cd $DIR_TMP
-	rm -rf v${HO_VER}.tar.gz
-	wget -cnv --no-check-certificate https://github.com/h2o/h2o/archive/v${HO_VER}.tar.gz
-	tar xzf v${HO_VER}.tar.gz
+	if [[ "$HO_GITBUILD" = [yY] ]]; then
+		if [[ ! -d "$DIR_TMP/h2o_git" ]]; then
+			git clone https://github.com/h2o/h2o.git h2o_git
+		fi
+	else
+		rm -rf v${HO_VER}.tar.gz
+		wget -cnv --no-check-certificate https://github.com/h2o/h2o/archive/v${HO_VER}.tar.gz
+		tar xzf v${HO_VER}.tar.gz
+	fi
 }
 
 install() {
@@ -72,8 +79,12 @@ install() {
 
 	echo "install h2o server"
 	echo
-	cd $DIR_TMP
-	cd h2o-${HO_VER}
+	if [[ "$HO_GITBUILD" = [yY] ]]; then
+		cd ${DIR_TMP}/h2o_git
+	else
+		cd $DIR_TMP
+		cd h2o-${HO_VER}
+	fi
 	cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
 	make${MAKETHREADS}
 	make install
@@ -168,13 +179,26 @@ EOF
 }
 
 hupdate() {
-	cd $DIR_TMP
-	cd h2o-${HO_VER}
-	rm -rf CMakeCache.txt
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
-	make${MAKETHREADS}
-	make install
-	complete
+	if [[ "$HO_GITBUILD" = [yY] ]]; then
+		if [[ ! -d "$DIR_TMP/h2o_git" ]]; then
+			download
+		fi
+		cd ${DIR_TMP}/h2o_git
+		rm -rf CMakeCache.txt
+		git pull
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+		make${MAKETHREADS}
+		make install
+		complete
+	else
+		cd $DIR_TMP
+		cd h2o-${HO_VER}
+		rm -rf CMakeCache.txt
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+		make${MAKETHREADS}
+		make install
+		complete
+	fi
 }
 ######################################################
 case "$1" in
