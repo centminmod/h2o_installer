@@ -11,6 +11,59 @@ Below is nghttp2 reference help files for nghttp2 compiled on CentOS 6.6 64bit s
 * [proxy = nghttpx](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#nghttpx-proxy)
 * [h2load load testing tool = h2load](https://github.com/centminmod/h2o_installer/blob/master/nghttp2/nghttp2_info.md#h2load-load-testing-tool-for-spdy-and-http2)
 
+nghttp2 configuration and compile parameters
+=========================================
+
+    PKG_CONFIG_PATH=/usr/local/http2-15/lib/pkgconfig ./configure --prefix=/usr/local/http2-15 --enable-app --with-xml-prefix=/usr/local/http2-15 LIBSPDYLAY_CFLAGS="-I/usr/local/http-15/include" LIBSPDYLAY_LIBS="-L/usr/local/http-15/lib -lspdylay" ZLIB_CFLAGS="-I/usr/local/http2-15/include" ZLIB_LIBS="-L/usr/local/http-15/lib" CFLAGS="-I/usr/local/http2-15/include" CXXFLAGS="-I/usr/local/http2-15/include" LDFLAGS="-L/usr/local/http2-15/lib" PYTHON_VERSION=2.7 PYTHON_CPPFLAGS="-I/usr/local/include/python2.7" PYTHON_LDFLAGS="-L/usr/local/lib -lpython2.7"
+
+    configure: summary of build options:
+
+    Version:        0.7.8-DEV shared 12:0:7
+    Host type:      x86_64-unknown-linux-gnu
+    Install prefix: /usr/local/http2-15
+    C compiler:     ccache gcc
+    CFLAGS:         -I/usr/local/http2-15/include
+    WARNCFLAGS:     
+    LDFLAGS:        -L/usr/local/http2-15/lib
+    LIBS:           
+    CPPFLAGS:       
+    C preprocessor: ccache gcc -E
+    C++ compiler:   ccache g++
+    CXXFLAGS:       -I/usr/local/http2-15/include -std=c++11
+    CXXCPP:         ccache g++ -E
+    Library types:  Shared=yes, Static=yes
+    Python:
+      Python:         /usr/local/bin/python2.7
+      PYTHON_VERSION: 2.7
+      pyexecdir:      
+      Python-dev:     yes
+      PYTHON_CPPFLAGS:-I/usr/local/include/python2.7
+      PYTHON_LDFLAGS: -L/usr/local/lib -lpython2.7
+      Cython:         cython
+    Test:
+      CUnit:          yes
+      Failmalloc:     yes
+    Libs:
+      OpenSSL:        yes
+      Libxml2:        yes
+      Libev:          yes
+      Libevent(SSL):  yes
+      Spdylay:        yes
+      Jansson:        yes
+      Jemalloc:       yes
+      Boost CPPFLAGS: 
+      Boost LDFLAGS:  
+      Boost::ASIO:    
+      Boost::System:  
+      Boost::Thread:  
+    Features:
+      Applications:   yes
+      HPACK tools:    yes
+      Libnghttp2_asio:no
+      Examples:       yes
+      Python bindings:yes
+      Threading:      yes
+
 nghttp client
 =========================================
 
