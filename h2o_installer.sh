@@ -17,6 +17,9 @@ CUSTOMCONF=y
 USER=nginx
 
 HO_GITBUILD=y
+OPENSSL_VERSION=1.0.2
+SSLDIR_TMP=/svr-setup/h2o_openssl
+STATICLIBSSL=/opt/h2o_openssl
 ######################################################
 DIR_TMP='/svr-setup'
 SCRIPT_DIR=$(readlink -f $(dirname ${BASH_SOURCE[0]}))
@@ -47,6 +50,34 @@ complete() {
 	/usr/local/bin/h2o -v
 	echo
 	/usr/local/bin/h2o --help
+}
+
+staticssl() {
+	# Build static openssl
+	if [ ! -d "$SSLDIR_TMP" ]; then
+		mkdir $SSLDIR_TMP
+	fi
+    cd ${SSLDIR_TMP}
+    rm -rf openssl-${OPENSSL_VERSION}.tar.gz
+    wget -cnv http://openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
+	tar xzf openssl-${OPENSSL_VERSION}.tar.gz
+    rm -rf "$STATICLIBSSL"
+    mkdir -p "$STATICLIBSSL"
+    cd openssl-${OPENSSL_VERSION}
+    make clean
+    ./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl no-shared enable-ec_nistp_64_gcc_128
+    # make depend
+    make${MAKETHREADS}
+    make install
+
+    echo
+    echo "OpenSSL static prefix ${STATICLIBSSL}"
+    echo "openssldir ${STATICLIBSSL}/ssl"
+    
+    echo
+    echo "ls -lah ${STATICLIBSSL}"
+    ls -lah ${STATICLIBSSL}
+    echo
 }
 
 download() {
@@ -85,7 +116,7 @@ install() {
 		cd $DIR_TMP
 		cd h2o-${HO_VER}
 	fi
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+	cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 	make${MAKETHREADS}
 	make install
 
@@ -110,6 +141,9 @@ http2-idle-timeout: 10
 http2-max-concurrent-requests-per-connection: 16
 num-threads: $CPUS
 user: $USER
+expires: 1 day
+file.dirlisting: off
+file.send-gzip: on
 listen:
   host: 0.0.0.0
   port: 8081
@@ -185,7 +219,7 @@ hupdate() {
 		cd ${DIR_TMP}/h2o_git
 		rm -rf CMakeCache.txt
 		git pull
-		cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 		make${MAKETHREADS}
 		make install
 		complete
@@ -193,7 +227,7 @@ hupdate() {
 		cd $DIR_TMP
 		cd h2o-${HO_VER}
 		rm -rf CMakeCache.txt
-		cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 		make${MAKETHREADS}
 		make install
 		complete
@@ -203,10 +237,12 @@ hupdate() {
 case "$1" in
 	install )
 		download
+		staticssl
 		install
 		;;
 	update )
 		download
+		staticssl
 		hupdate
 		;;
 	pattern )
