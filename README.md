@@ -188,3 +188,42 @@ Using nghttp2 client to check h2o SSL server on port 8081 for HTTP/2 support = n
               ; END_STREAM
     [  0.003] send GOAWAY frame <length=8, flags=0x00, stream_id=0>
               (last_stream_id=0, error_code=NO_ERROR(0x00), opaque_data(0)=[])
+
+h2load HTTP/2 benchmark against default Centmin Mod LEMP Nginx index page which is 3801 bytes in size
+
+    curl -I https://XXX.centminmod.com:8081
+    HTTP/1.1 200 OK
+    Date: Wed, 18 Mar 2015 03:02:21 GMT
+    Server: h2o/1.1.1
+    Connection: keep-alive
+    Content-Length: 3801
+    content-type: text/html
+    last-modified: Sat, 14 Mar 2015 19:15:28 GMT
+    etag: "550488d0-ed9"
+
+h2load run on same server as h2o server with 100 max concurrent steams to issue per session, 500 concurrent clients and 2 million requests
+
+    /usr/local/http2-15/bin/h2load -c500 -m100 -n2000000 -v https://XXX.centminmod.com:8081
+    starting benchmark...
+    spawning thread #0: 500 concurrent clients, 2000000 total requests
+    Protocol: TLSv1.2
+    Cipher: ECDHE-RSA-AES128-GCM-SHA256
+    Server Temp Key: ECDH P-256 256 bits
+    progress: 10% done
+    progress: 20% done
+    progress: 30% done
+    progress: 40% done
+    progress: 50% done
+    progress: 60% done
+    progress: 70% done
+    progress: 80% done
+    progress: 90% done
+    progress: 100% done
+    
+    finished in 36.88s, 54230 req/s, 197.89MB/s
+    requests: 2000000 total, 2000000 started, 2000000 done, 2000000 succeeded, 0 failed, 0 errored
+    status codes: 2000000 2xx, 0 3xx, 0 4xx, 0 5xx
+    traffic: 7652522927 bytes total, 12469082 bytes headers, 7602000000 bytes data
+                         min         max         mean         sd        +/- sd
+    time for request:    12.78ms       1.24s    883.65ms    123.36ms    83.53%
+              
