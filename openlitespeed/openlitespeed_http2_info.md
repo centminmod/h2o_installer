@@ -41,7 +41,7 @@ curl check for OpenLiteSpeed 1.3.8 on port 8082
 
 Using [nghttp2](https://nghttp2.org/) bundled h2load HTTP/2 load tester doesn't seem to detect supported HTTP/2 protocol for OpenLiteSpeed 1.3.8  on port 8082 ? could be related to OpenLiteSpeed 1.3.8's OpenSSL version is <OpenSSL 1.0.2 so doesn't support ALPN TLS extension (see further below)
 
-/usr/local/http2-15/bin/h2load -c1 -m1 -n1 -v https://OPENLITESPEEDHOST.centminmod.com:8082               
+    /usr/local/http2-15/bin/h2load -c1 -m1 -n1 -v https://OPENLITESPEEDHOST.centminmod.com:8082               
     starting benchmark...
     spawning thread #0: 1 concurrent clients, 1 total requests
     Protocol: TLSv1.2
