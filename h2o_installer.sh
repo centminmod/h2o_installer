@@ -155,6 +155,7 @@ user: $USER
 expires: 1 day
 file.dirlisting: off
 file.send-gzip: on
+header.set: "Powered by: h2o on centminmod.com"
 listen:
   host: 0.0.0.0
   port: 8081
