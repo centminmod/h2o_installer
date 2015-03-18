@@ -208,6 +208,11 @@ echo "/usr/local/http2-15/bin/nghttp -h
 
 echo
 echo "---------------------------------------------------"
+echo "example nghttp client check h2o server for h2 protocol"
+echo "/usr/local/http2-15/bin/nghttp -nv https://localhost:8081"
+
+echo
+echo "---------------------------------------------------"
 echo "All binaries located at /usr/local/http2-15/bin/"
 ls -lhrt /usr/local/http2-15/bin/
 
