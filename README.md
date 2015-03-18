@@ -114,7 +114,7 @@ compared to Centmin Mod Nginx SPDY setup with OpenSSL 1.0.2 chacha20_poly1305 ci
 
 Using OpenSSL 1.0.2 static compiled client to check h2o SSL server for ALPN and NPN TLS extension support
 
-check for ALPN extension support in h2o server
+check for ALPN extension support in h2o server - look for `ALPN protocol: h2-14`
 
     /opt/h2o_openssl/bin/openssl s_client -alpn h2-14 -host XXX.centminmod.com -port 8081
     CONNECTED(00000003)
@@ -130,7 +130,7 @@ check for ALPN extension support in h2o server
         Protocol  : TLSv1.2
         Cipher    : ECDHE-RSA-AES256-GCM-SHA384
 
-check for NPN extension support in h2o server
+check for NPN extension support in h2o server - look for `Next protocol: (1) h2-14`
 
     /opt/h2o_openssl/bin/openssl s_client -nextprotoneg h2-14 -host XXX.centminmod.com -port 8081
     
@@ -143,7 +143,7 @@ check for NPN extension support in h2o server
     Next protocol: (1) h2-14
     No ALPN negotiated
 
-Using nghttp2 client to check h2o SSL server on port 8081 for HTTP/2 support = negotiated protocoal = h2
+Using nghttp2 client to check h2o SSL server on port 8081 for HTTP/2 support = negotiated protocol = h2
 
     /usr/local/http2-15/bin/nghttp -nv https://XXX.centminmod.com:8081
     [  0.000] Connected
