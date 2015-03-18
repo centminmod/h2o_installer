@@ -111,3 +111,80 @@ compared to Centmin Mod Nginx SPDY setup with OpenSSL 1.0.2 chacha20_poly1305 ci
     TLS ticket lifetime hint: 43200
     OCSP stapling: supported
     Server side cipher ordering
+
+Using OpenSSL 1.0.2 static compiled client to check h2o SSL server for ALPN and NPN TLS extension support
+
+check for ALPN extension support in h2o server
+
+    /opt/h2o_openssl/bin/openssl s_client -alpn h2-14 -host XXX.centminmod.com -port 8081
+    CONNECTED(00000003)
+    
+    ---
+    New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+    Server public key is 2048 bit
+    Secure Renegotiation IS supported
+    Compression: NONE
+    Expansion: NONE
+    ALPN protocol: h2-14
+    SSL-Session:
+        Protocol  : TLSv1.2
+        Cipher    : ECDHE-RSA-AES256-GCM-SHA384
+
+check for NPN extension support in h2o server
+
+    /opt/h2o_openssl/bin/openssl s_client -nextprotoneg h2-14 -host XXX.centminmod.com -port 8081
+    
+    ---
+    New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES256-GCM-SHA384
+    Server public key is 2048 bit
+    Secure Renegotiation IS supported
+    Compression: NONE
+    Expansion: NONE
+    Next protocol: (1) h2-14
+    No ALPN negotiated
+
+Using nghttp2 client to check h2o SSL server on port 8081 for HTTP/2 support = negotiated protocoal = h2
+
+    /usr/local/http2-15/bin/nghttp -nv https://XXX.centminmod.com:8081
+    [  0.000] Connected
+    The negotiated protocol: h2
+    [  0.003] send SETTINGS frame <length=12, flags=0x00, stream_id=0>
+              (niv=2)
+              [SETTINGS_MAX_CONCURRENT_STREAMS(0x03):100]
+              [SETTINGS_INITIAL_WINDOW_SIZE(0x04):65535]
+    [  0.003] send HEADERS frame <length=45, flags=0x05, stream_id=1>
+              ; END_STREAM | END_HEADERS
+              (padlen=0)
+              ; Open new stream
+              :method: GET
+              :path: /
+              :scheme: https
+              :authority: XXX.centminmod.com:8081
+              accept: */*
+              accept-encoding: gzip, deflate
+              user-agent: nghttp2/0.7.8-DEV
+    [  0.003] recv SETTINGS frame <length=18, flags=0x00, stream_id=0>
+              (niv=3)
+              [SETTINGS_ENABLE_PUSH(0x02):0]
+              [SETTINGS_MAX_CONCURRENT_STREAMS(0x03):100]
+              [SETTINGS_INITIAL_WINDOW_SIZE(0x04):262144]
+    [  0.003] send SETTINGS frame <length=0, flags=0x01, stream_id=0>
+              ; ACK
+              (niv=0)
+    [  0.003] recv SETTINGS frame <length=0, flags=0x01, stream_id=0>
+              ; ACK
+              (niv=0)
+    [  0.003] recv (stream_id=1) :status: 200
+    [  0.003] recv (stream_id=1) server: h2o/1.1.1
+    [  0.003] recv (stream_id=1) date: Wed, 18 Mar 2015 02:36:16 GMT
+    [  0.003] recv (stream_id=1) content-type: text/html
+    [  0.003] recv (stream_id=1) last-modified: Sat, 14 Mar 2015 19:15:28 GMT
+    [  0.003] recv (stream_id=1) etag: "550488d0-ed9"
+    [  0.003] recv HEADERS frame <length=81, flags=0x04, stream_id=1>
+              ; END_HEADERS
+              (padlen=0)
+              ; First response header
+    [  0.003] recv DATA frame <length=3801, flags=0x01, stream_id=1>
+              ; END_STREAM
+    [  0.003] send GOAWAY frame <length=8, flags=0x00, stream_id=0>
+              (last_stream_id=0, error_code=NO_ERROR(0x00), opaque_data(0)=[])
