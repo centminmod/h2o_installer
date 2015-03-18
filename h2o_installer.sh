@@ -50,6 +50,17 @@ complete() {
 	/usr/local/bin/h2o -v
 	echo
 	/usr/local/bin/h2o --help
+	echo
+	echo "check h2o server for ALPN & NPN TLS extension support "
+	echo
+	echo "check h2o SSL server supports ALPN"
+	echo "look for ALPN protocol: h2-14 in the output"
+	echo "/opt/h2o_openssl/bin/openssl s_client -alpn h2-14 -host localhost -port 8081"
+	echo
+	echo "check h2o SSL server supports NPN"
+	echo "look for Next protocol: (1) h2-14"
+	echo "/opt/h2o_openssl/bin/openssl s_client -nextprotoneg h2-14 -host localhost -port 8081"
+	echo
 }
 
 staticssl() {
