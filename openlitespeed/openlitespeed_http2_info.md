@@ -98,65 +98,60 @@ NPN check reports that NPN extension is supported = Next protocol: (1) h2-14
 
 nghttp2 client check for HTTP/2 support in OpenLiteSpeed 1.3.8 on port 8082
 
-    /usr/local/http2-15/bin/nghttp -nv https://OPENLITESPEEDHOST.centminmod.com:7080
+    /usr/local/http2-15/bin/nghttp -nv https://OPENLITESPEEDHOST.centminmod.com:8082
     [  0.000] Connected
-    [  0.004][NPN] server offers:
+    [  0.001][NPN] server offers:
               * h2-14
               * spdy/3.1
               * spdy/3
               * spdy/2
               * http/1.1
     The negotiated protocol: h2-14
-    [  0.006] send SETTINGS frame <length=12, flags=0x00, stream_id=0>
+    [  0.004] send SETTINGS frame <length=12, flags=0x00, stream_id=0>
               (niv=2)
               [SETTINGS_MAX_CONCURRENT_STREAMS(0x03):100]
               [SETTINGS_INITIAL_WINDOW_SIZE(0x04):65535]
-    [  0.006] send HEADERS frame <length=45, flags=0x05, stream_id=1>
+    [  0.004] send HEADERS frame <length=45, flags=0x05, stream_id=1>
               ; END_STREAM | END_HEADERS
               (padlen=0)
               ; Open new stream
               :method: GET
               :path: /
               :scheme: https
-              :authority: OPENLITESPEEDHOST.centminmod.com:7080
+              :authority: OPENLITESPEEDHOST.centminmod.com:8082
               accept: */*
               accept-encoding: gzip, deflate
               user-agent: nghttp2/0.7.8-DEV
-    [  0.006] recv SETTINGS frame <length=12, flags=0x00, stream_id=0>
+    [  0.005] recv SETTINGS frame <length=12, flags=0x00, stream_id=0>
               (niv=2)
               [SETTINGS_MAX_CONCURRENT_STREAMS(0x03):100]
               [SETTINGS_INITIAL_WINDOW_SIZE(0x04):65536]
-    [  0.006] recv WINDOW_UPDATE frame <length=4, flags=0x00, stream_id=0>
+    [  0.005] recv WINDOW_UPDATE frame <length=4, flags=0x00, stream_id=0>
               (window_size_increment=65535)
-    [  0.006] send SETTINGS frame <length=0, flags=0x01, stream_id=0>
+    [  0.005] send SETTINGS frame <length=0, flags=0x01, stream_id=0>
               ; ACK
               (niv=0)
-    [  0.006] recv SETTINGS frame <length=0, flags=0x01, stream_id=0>
+    [  0.005] recv SETTINGS frame <length=0, flags=0x01, stream_id=0>
               ; ACK
               (niv=0)
-    [  0.046] recv (stream_id=1) :status: 302
-    [  0.046] recv (stream_id=1) x-powered-by: PHP/5.3.29
-    [  0.046] recv (stream_id=1) set-cookie: LSWSWEBUI=3a48038054563d12c864726e2053db1d; path=/
-    [  0.046] recv (stream_id=1) set-cookie: lsws_uid=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/
-    [  0.046] recv (stream_id=1) set-cookie: lsws_pass=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/
-    [  0.046] recv (stream_id=1) set-cookie: LSWSWEBUI=deleted; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/
-    [  0.046] recv (stream_id=1) expires: Thu, 19 Nov 1981 08:52:00 GMT
-    [  0.046] recv (stream_id=1) cache-control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
-    [  0.046] recv (stream_id=1) pragma: no-cache
-    [  0.046] recv (stream_id=1) location: /login.php
-    [  0.046] recv (stream_id=1) content-type: text/html
-    [  0.046] recv (stream_id=1) date: Wed, 18 Mar 2015 03:49:56 GMT
-    [  0.046] recv (stream_id=1) server: LiteSpeed
-    [  0.046] recv (stream_id=1) content-encoding: gzip
-    [  0.046] recv (stream_id=1) vary: accept-encoding
-    [  0.046] recv HEADERS frame <length=368, flags=0x04, stream_id=1>
+    [  0.044] recv (stream_id=1) :status: 200
+    [  0.044] recv (stream_id=1) etag: "ed9-5508fbfa-6633c"
+    [  0.044] recv (stream_id=1) last-modified: Wed, 18 Mar 2015 04:15:54 GMT
+    [  0.044] recv (stream_id=1) content-type: text/html
+    [  0.044] recv (stream_id=1) accept-ranges: bytes
+    [  0.044] recv (stream_id=1) date: Wed, 18 Mar 2015 05:22:46 GMT
+    [  0.044] recv (stream_id=1) server: LiteSpeed
+    [  0.044] recv (stream_id=1) content-encoding: gzip
+    [  0.044] recv (stream_id=1) vary: accept-encoding
+    [  0.044] recv HEADERS frame <length=109, flags=0x04, stream_id=1>
               ; END_HEADERS
               (padlen=0)
               ; First response header
-    [  0.046] recv DATA frame <length=20, flags=0x00, stream_id=1>
-    [  0.046] recv DATA frame <length=0, flags=0x01, stream_id=1>
+    [  0.044] recv DATA frame <length=10, flags=0x00, stream_id=1>
+    [  0.044] recv DATA frame <length=1568, flags=0x00, stream_id=1>
+    [  0.044] recv DATA frame <length=0, flags=0x01, stream_id=1>
               ; END_STREAM
-    [  0.046] send GOAWAY frame <length=8, flags=0x00, stream_id=0>
+    [  0.044] send GOAWAY frame <length=8, flags=0x00, stream_id=0>
               (last_stream_id=0, error_code=NO_ERROR(0x00), opaque_data(0)=[])
 
 OpenLiteSpeed 1.3.8 SSL Vhost and SSL Listener setup
