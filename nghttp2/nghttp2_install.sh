@@ -52,6 +52,7 @@ mkdir -p /opt/gcc484
 cd /opt/gcc484
 git clone https://github.com/centminmod/gcc-4.8.4-boost-1.57.git 4.8.4
 cd 4.8.4
+chmod 0700 bld.sh
 time make${MAKETHREADS}
 
 echo
@@ -65,6 +66,15 @@ MY_GXX_HOME="/opt/gcc484/4.8.4/rtf"
 export PATH="${MY_GXX_HOME}/bin:${PATH}"
 export LD_LIBRARY_PATH="${MY_GXX_HOME}/lib:${MY_GXX_HOME}/lib64:${LD_LIBRARY_PATH}"
 export LD_RUN_PATH="${MY_GXX_HOME}/lib:${MY_GXX_HOME}/lib64:${LD_LIBRARY_PATH}"
+
+cat > /root/.gcc484 <<EOF
+MY_GXX_HOME="/opt/gcc484/4.8.4/rtf"
+export PATH="\${MY_GXX_HOME}/bin:\${PATH}"
+export LD_LIBRARY_PATH="\${MY_GXX_HOME}/lib:\${MY_GXX_HOME}/lib64:\${LD_LIBRARY_PATH}"
+export LD_RUN_PATH="\${MY_GXX_HOME}/lib:\${MY_GXX_HOME}/lib64:\${LD_LIBRARY_PATH}"
+EOF
+
+. /root/.gcc484
 
 #################################################################
 echo
@@ -94,6 +104,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_openssl
 wget --no-check-certificate https://www.openssl.org/source/openssl-1.0.2.tar.gz
 tar xzf openssl-1.0.2.tar.gz
 cd openssl-1.0.2
+make clean
 ./config shared enable-threads enable-ec_nistp_64_gcc_128 --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
@@ -109,6 +120,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_libevent21
 wget https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
 tar xzf libevent-2.0.21-stable.tar.gz
 cd libevent-2.0.21-stable
+make clean
 CFLAGS=-I/usr/local/http2-15/include CXXFLAGS=-I/usr/local/http2-15/include LDFLAGS=-L/usr/local/http2-15/lib ./configure --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
@@ -123,6 +135,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_libev
 wget http://dist.schmorp.de/libev/libev-4.19.tar.gz
 tar xzf libev-4.19.tar.gz
 cd libev-4.19
+make clean
 CFLAGS=-I/usr/local/http2-15/include CXXFLAGS=-I/usr/local/http2-15/include LDFLAGS=-L/usr/local/http2-15/lib ./configure --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
@@ -137,6 +150,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_zlib
 wget http://zlib.net/zlib-1.2.8.tar.gz
 tar xzf zlib-1.2.8.tar.gz
 cd zlib-1.2.8
+make clean
 ./configure --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
@@ -151,6 +165,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_libxml2
 wget http://xmlsoft.org/sources/libxml2-2.9.2.tar.gz
 tar xzf libxml2-2.9.2.tar.gz
 cd libxml2-2.9.2
+make clean
 ./configure --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
@@ -176,9 +191,10 @@ mkdir ${BASEINSTALL_DIR}/nghttp2_spdylay
 cd ${BASEINSTALL_DIR}/nghttp2_spdylay
 git clone https://github.com/tatsuhiro-t/spdylay.git
 cd spdylay
+make clean
 (cd m4 && wget http://keithr.org/eric/src/whoisserver-nightly/m4/am_path_xml2.m4)
 /usr/local/bin/autoreconf -i --force
-PKG_CONFIG_PATH=/usr/local/http2-15/lib/pkgconfig ./configure --prefix=/usr/local/http-15
+PKG_CONFIG_PATH=/usr/local/http2-15/lib/pkgconfig ./configure --prefix=/usr/local/http-15 --with-xml-prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
 
