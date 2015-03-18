@@ -9,6 +9,7 @@
 #################################################################
 BASEINSTALL_DIR=/svr-setup
 
+GCCBUILD='y'
 #################################################################
 # functions
 if [ -f /proc/user_beancounters ]; then
@@ -34,47 +35,54 @@ if [ ! -f /usr/local/bin/python2.7 ]; then
 	echo "then re-run nghttp2_install.sh"
 	exit
 fi
+
+if [ ! -d "$BASEINSTALL_DIR" ]; then
+  mkdir -p $BASEINSTALL_DIR
+fi
+
 #################################################################
 # yum packages required
 echo
 echo "yum packages"
 yum -y remove boost boost-devel boost-system boost-filesystem boost-thread
-yum -y install jemalloc jemalloc-devel jansson jansson-devel libxml2 libxml2-devel libxml2-static redhat-lsb-core libev libev-devel CUnit CUnit-devel clang clang-devel
+yum -y install jemalloc jemalloc-devel jansson jansson-devel libxml2 libxml2-devel libxml2-static redhat-lsb-core libev libev-devel CUnit CUnit-devel clang clang-devel bison bison-devel
 
 #################################################################
+if [[ "$GCCBUILD" = [yY] ]]; then
 echo
 echo "---------------------------------------------------"
-echo "update to gcc 4.8.4 + boost 1.5.7 etc"
+echo "update to gcc 4.8.3 + boost 1.5.5 etc"
 echo "---------------------------------------------------"
 echo "can take hours to compile"
 mkdir -p /opt/
-mkdir -p /opt/gcc484
-cd /opt/gcc484
-git clone https://github.com/centminmod/gcc-4.8.4-boost-1.57.git 4.8.4
-cd 4.8.4
+mkdir -p /opt/gcc483
+cd /opt/gcc483
+git clone https://github.com/centminmod/gcc-4.8.3-boost-1.55.git 4.8.3
+cd 4.8.3
 chmod 0700 bld.sh
 time make${MAKETHREADS}
 
 echo
 echo "clean up gcc / boost build files"
-rm -rf /opt/gcc484/4.8.4/bld
-rm -rf /opt/gcc484/4.8.4/src
-rm -rf /opt/gcc484/4.8.4/logs
-rm -rf /opt/gcc484/4.8.4/archives
+rm -rf /opt/gcc483/4.8.3/bld
+rm -rf /opt/gcc483/4.8.3/src
+rm -rf /opt/gcc483/4.8.3/logs
+rm -rf /opt/gcc483/4.8.3/archives
 
-MY_GXX_HOME="/opt/gcc484/4.8.4/rtf"
+MY_GXX_HOME="/opt/gcc483/4.8.3/rtf"
 export PATH="${MY_GXX_HOME}/bin:${PATH}"
 export LD_LIBRARY_PATH="${MY_GXX_HOME}/lib:${MY_GXX_HOME}/lib64:${LD_LIBRARY_PATH}"
 export LD_RUN_PATH="${MY_GXX_HOME}/lib:${MY_GXX_HOME}/lib64:${LD_LIBRARY_PATH}"
 
-cat > /root/.gcc484 <<EOF
-MY_GXX_HOME="/opt/gcc484/4.8.4/rtf"
+cat > /root/.gcc483 <<EOF
+MY_GXX_HOME="/opt/gcc483/4.8.3/rtf"
 export PATH="\${MY_GXX_HOME}/bin:\${PATH}"
 export LD_LIBRARY_PATH="\${MY_GXX_HOME}/lib:\${MY_GXX_HOME}/lib64:\${LD_LIBRARY_PATH}"
 export LD_RUN_PATH="\${MY_GXX_HOME}/lib:\${MY_GXX_HOME}/lib64:\${LD_LIBRARY_PATH}"
 EOF
 
-. /root/.gcc484
+. /root/.gcc483
+fi
 
 #################################################################
 echo
