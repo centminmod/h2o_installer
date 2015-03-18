@@ -46,6 +46,7 @@ echo
 echo "yum packages"
 yum -y remove boost boost-devel boost-system boost-filesystem boost-thread
 yum -y install jemalloc jemalloc-devel jansson jansson-devel libxml2 libxml2-devel libxml2-static redhat-lsb-core libev libev-devel CUnit CUnit-devel clang clang-devel bison bison-devel
+yum -y groupinstall "Development Tools"
 
 #################################################################
 if [[ "$GCCBUILD" = [yY] ]]; then
