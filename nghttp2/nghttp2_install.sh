@@ -94,7 +94,7 @@ cd ${BASEINSTALL_DIR}/nghttp2_openssl
 wget --no-check-certificate https://www.openssl.org/source/openssl-1.0.2.tar.gz
 tar xzf openssl-1.0.2.tar.gz
 cd openssl-1.0.2
-./config shared enable-ec_nistp_64_gcc_128 --prefix=/usr/local/http2-15
+./config shared enable-threads enable-ec_nistp_64_gcc_128 --prefix=/usr/local/http2-15
 make${MAKETHREADS}
 make install
 
