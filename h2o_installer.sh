@@ -76,7 +76,12 @@ staticssl() {
     mkdir -p "$STATICLIBSSL"
     cd openssl-${OPENSSL_VERSION}
     make clean
-    ./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads no-shared enable-ec_nistp_64_gcc_128
+    # enable-ec_nistp_64_gcc_128 option only supported in 64bit linux
+    if [[ "$(uname -m)" = 'x86_64' ]]; then
+    	./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads no-shared enable-ec_nistp_64_gcc_128
+	else
+		./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads no-shared
+	fi
     # make depend
     make${MAKETHREADS}
     make install
