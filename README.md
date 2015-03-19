@@ -1,4 +1,4 @@
-[h2o http server](https://github.com/h2o/h2o) installer script for integrating h2o into centminmod.com LEMP web stack
+[h2o http server](https://github.com/h2o/h2o) installer script for integrating h2o into centminmod.com LEMP web stack. For [nghttp2 HTTP/2 C Library](https://nghttp2.org/) usage it's easier to use my [nghttp2 Docker image](https://github.com/centminmod/docker-ubuntu-nghttp2) built on Ubuntu 14 than trying to source compile on CentOS (takes too long).
 
 More info on HTTP/2 at [http://http2rulez.com/](http://http2rulez.com/)
 
