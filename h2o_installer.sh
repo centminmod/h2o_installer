@@ -50,6 +50,10 @@ complete() {
 	/usr/local/bin/h2o -v
 	echo
 	/usr/local/bin/h2o --help
+	echo 
+	echo "set optional shortcut cmd aliases"
+	echo "alias manh2o='/usr/local/bin/h2o -c /usr/local/h2o/h2o.conf'"
+	echo "alias h2oedit='nano -w /usr/local/h2o/h2o.conf'"
 	echo
 	echo "check h2o server for ALPN & NPN TLS extension support "
 	echo
