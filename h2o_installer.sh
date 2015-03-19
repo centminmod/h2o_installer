@@ -17,7 +17,7 @@ CUSTOMCONF=y
 USER=nginx
 
 HO_GITBUILD=y
-OPENSSL_VERSION=1.0.2
+OPENSSL_VERSION=1.0.2a
 SSLDIR_TMP=/svr-setup/h2o_openssl
 STATICLIBSSL=/opt/h2o_openssl
 ######################################################
