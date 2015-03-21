@@ -68,29 +68,34 @@ example SSL config
 
 check https SSL on port 8081 for H20 server using [cipherscan](https://github.com/jvehent/cipherscan)
 
-    ./cipherscan XXX.centminmod.com:8081        
-    ..............
-    Target: XXX.centminmod.com:8081
+    ./cipherscan XXX.centminmod.com:8081
+    .....................
+    Target: h2ohttp2.centminmod.com:8081
     
-    prio  ciphersuite                  protocols              pfs_keysize
-    1     ECDHE-RSA-AES256-GCM-SHA384  TLSv1.2                ECDH,P-256,256bits
-    2     ECDHE-RSA-AES256-SHA384      TLSv1.2                ECDH,P-256,256bits
-    3     ECDHE-RSA-AES256-SHA         TLSv1,TLSv1.1,TLSv1.2  ECDH,P-256,256bits
-    4     AES256-GCM-SHA384            TLSv1.2
-    5     AES256-SHA256                TLSv1.2
-    6     AES256-SHA                   TLSv1,TLSv1.1,TLSv1.2
-    7     ECDHE-RSA-AES128-GCM-SHA256  TLSv1.2                ECDH,P-256,256bits
-    8     ECDHE-RSA-AES128-SHA256      TLSv1.2                ECDH,P-256,256bits
-    9     ECDHE-RSA-AES128-SHA         TLSv1,TLSv1.1,TLSv1.2  ECDH,P-256,256bits
-    10    AES128-GCM-SHA256            TLSv1.2
-    11    AES128-SHA256                TLSv1.2
-    12    AES128-SHA                   TLSv1,TLSv1.1,TLSv1.2
-    13    DES-CBC3-SHA                 TLSv1,TLSv1.1,TLSv1.2
+    prio  ciphersuite                  protocols              pubkey_size  signature_algorithm      trusted  ticket_hint  ocsp_staple  pfs_keysize
+    1     ECDHE-RSA-CHACHA20-POLY1305  TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    2     ECDHE-RSA-AES128-GCM-SHA256  TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    3     ECDHE-RSA-AES256-GCM-SHA384  TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    4     DHE-RSA-AES128-GCM-SHA256    TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    5     DHE-RSA-AES256-GCM-SHA384    TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    6     ECDHE-RSA-AES128-SHA256      TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    7     ECDHE-RSA-AES128-SHA         TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    8     ECDHE-RSA-AES256-SHA384      TLSv1.2                2048         sha256WithRSAEncryption  True     None         True         ECDH,P-256,256bits
+    9     ECDHE-RSA-AES256-SHA         TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True         ECDH,P-256,256bits
+    10    DHE-RSA-AES128-SHA256        TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    11    DHE-RSA-AES128-SHA           TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    12    DHE-RSA-AES256-SHA256        TLSv1.2                2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    13    DHE-RSA-AES256-SHA           TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True         DH,4096bits
+    14    AES128-GCM-SHA256            TLSv1.2                2048         sha256WithRSAEncryption  True     300          True
+    15    AES256-GCM-SHA384            TLSv1.2                2048         sha256WithRSAEncryption  True     300          True
+    16    AES128-SHA256                TLSv1.2                2048         sha256WithRSAEncryption  True     300          True
+    17    AES256-SHA256                TLSv1.2                2048         sha256WithRSAEncryption  True     300          True
+    18    AES128-SHA                   TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True
+    19    AES256-SHA                   TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True
+    20    DES-CBC3-SHA                 TLSv1,TLSv1.1,TLSv1.2  2048         sha256WithRSAEncryption  True     300          True
     
-    Certificate: trusted, 2048 bit, sha256WithRSAEncryption signature
-    TLS ticket lifetime hint: 300
     OCSP stapling: supported
-    Client side cipher ordering
+    Server side cipher ordering
 
 compared to Centmin Mod Nginx SPDY setup with OpenSSL 1.0.2 chacha20_poly1305 cipher patched on [https://community.centminmod.com](https://community.centminmod.com)
 
