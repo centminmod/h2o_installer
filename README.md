@@ -68,7 +68,7 @@ example SSL config
 
 check https SSL on port 8081 for H20 server using [cipherscan](https://github.com/jvehent/cipherscan)
 
-    ./cipherscan XXX.centminmod.com:8081
+    ./cipherscan h2ohttp2.centminmod.com:8081
     .....................
     Target: h2ohttp2.centminmod.com:8081
     
