@@ -10,6 +10,9 @@
 # 
 # this script uses Zopfli compression algorithm by default instead
 # of gzip for better compression ratios https://github.com/google/zopfli
+# edit ZOPFLIBIN to point to where you installed zopfli binary
+# can also symlink to /usr/bin/h2o_compress for convenience
+# e.g. ln -s /root/tools/zopfli_compress.sh /usr/bin/h2o_compress
 # 
 # can also use pigz multi-threaded compression tool's zopfli support
 # if you have more than 1 cpu thread, pigz can use level 11 for zopfli
