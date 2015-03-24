@@ -92,9 +92,9 @@ staticssl() {
     make clean
     # enable-ec_nistp_64_gcc_128 option only supported in 64bit linux
     if [[ "$(uname -m)" = 'x86_64' ]]; then
-    	./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads no-shared experimental-jpake enable-md2 enable-rc5 enable-rfc3779 enable-gost enable-static-engine enable-ec_nistp_64_gcc_128
+    	./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads zlib no-shared experimental-jpake enable-md2 enable-rc5 enable-rfc3779 enable-gost enable-static-engine enable-ec_nistp_64_gcc_128
 	else
-		./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads no-shared
+		./config --prefix=${STATICLIBSSL} --openssldir=${STATICLIBSSL}/ssl enable-threads zlib no-shared
 	fi
     # make depend
     make${MAKETHREADS}
