@@ -17,6 +17,7 @@ CUSTOMCONF=y
 USER=nginx
 
 HO_GITBUILD=y
+LIBRESSL='n'
 OPENSSL_VERSION=1.0.2a
 SSLDIR_TMP=/svr-setup/h2o_openssl
 STATICLIBSSL=/opt/h2o_openssl
@@ -147,7 +148,12 @@ install() {
 		cd h2o-${HO_VER}
 	fi
 	rm -rf CMakeCache.txt
-	cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+	rm -rf CMakeFiles
+	if [[ "$LIBRESSL" = [yY] ]]; then
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+	else
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+	fi
 	make${MAKETHREADS}
 	make install
 
@@ -261,8 +267,13 @@ hupdate() {
 		fi
 		cd ${DIR_TMP}/h2o_git
 		rm -rf CMakeCache.txt
+		rm -rf CMakeFiles
 		git pull
-		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+		if [[ "$LIBRESSL" = [yY] ]]; then
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+		else
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+		fi
 		make${MAKETHREADS}
 		make install
 		complete
@@ -270,7 +281,12 @@ hupdate() {
 		cd $DIR_TMP
 		cd h2o-${HO_VER}
 		rm -rf CMakeCache.txt
-		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+		rm -rf CMakeFiles
+		if [[ "$LIBRESSL" = [yY] ]]; then
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+		else
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
+		fi
 		make${MAKETHREADS}
 		make install
 		complete
