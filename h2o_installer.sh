@@ -150,7 +150,7 @@ install() {
 	rm -rf CMakeCache.txt
 	rm -rf CMakeFiles
 	if [[ "$LIBRESSL" = [yY] ]]; then
-		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_BUNDLED_SSL=ON .
 	else
 		cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 	fi
@@ -270,7 +270,7 @@ hupdate() {
 		rm -rf CMakeFiles
 		git pull
 		if [[ "$LIBRESSL" = [yY] ]]; then
-			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_BUNDLED_SSL=ON .
 		else
 			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 		fi
@@ -283,7 +283,7 @@ hupdate() {
 		rm -rf CMakeCache.txt
 		rm -rf CMakeFiles
 		if [[ "$LIBRESSL" = [yY] ]]; then
-			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DUSE_BUNDLED_SSL=ON .
+			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_BUNDLED_SSL=ON .
 		else
 			cmake -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INCLUDE_PATH=${STATICLIBSSL}/include -DCMAKE_LIBRARY_PATH=${STATICLIBSSL}/lib .
 		fi
