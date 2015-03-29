@@ -82,13 +82,8 @@ staticssl() {
 		git clone --depth 1 https://github.com/PeterMosmans/openssl.git h2o_openssl -b 1.0.2-chacha
 	fi
 
- #    cd ${SSLDIR_TMP}
- #    rm -rf openssl-${OPENSSL_VERSION}.tar.gz
- #    wget -cnv http://openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
-	# tar xzf openssl-${OPENSSL_VERSION}.tar.gz
     rm -rf "$STATICLIBSSL"
     mkdir -p "$STATICLIBSSL"
-    # cd openssl-${OPENSSL_VERSION}
     cd $SSLDIR_TMP
     make clean
     # enable-ec_nistp_64_gcc_128 option only supported in 64bit linux
@@ -175,13 +170,17 @@ http1-request-timeout: 10
 limit-request-body: 536870912
 http1-upgrade-to-http2: ON
 http2-idle-timeout: 10
-http2-max-concurrent-requests-per-connection: 16
+http2-max-concurrent-requests-per-connection: 1000
 num-threads: $CPUS
 user: $USER
-expires: 1 day
+expires: 900 second
 file.dirlisting: off
 file.send-gzip: on
-header.set: "Powered by: h2o on centminmod.com"
+file.mime.addtypes:
+   application/atom+xml: .xml
+   application/zip: .zip
+   image/x-icon: .ico
+header.add: "Powered by: h2o on centminmod.com"
 listen:
   host: 0.0.0.0
   port: 8081
@@ -190,16 +189,8 @@ listen:
     key-file: /usr/local/h2o/server.key
     minimum-version: TLSv1
     cipher-suite: ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA:!CAMELLIA
+    #dh-file: /full/path/to/dhparam.pem
     cipher-preference: server
-
-expires: 2 day
-file.dirlisting: off
-file.send-gzip: on
-header.set: "Powered by: h2o on centminmod.com"
-header.set: "SSL Host: default SSL"
-header.set: "strict-transport-security: max-age=31536000; includeSubDomains; preload"
-header.set: "x-frame-options: deny"
-
 hosts:
   "0.0.0.0:8080":
     paths:
@@ -215,6 +206,7 @@ hosts:
         key-file: /usr/local/h2o/alternate.key
         minimum-version: TLSv1
         cipher-suite: ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA:!CAMELLIA
+        #dh-file: /full/path/to/dhparam.pem
         cipher-preference: server
     paths:
       /:
