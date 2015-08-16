@@ -180,7 +180,7 @@ file.mime.addtypes:
    application/atom+xml: .xml
    application/zip: .zip
    image/x-icon: .ico
-header.add: "Powered by: h2o on centminmod.com"
+header.add: "x-powered-by: h2o on centminmod.com"
 listen:
   host: 0.0.0.0
   port: 8081
